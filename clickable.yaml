@@ -1,0 +1,35 @@
+clickable_minimum_required: 7.1.2
+framework: ubuntu-sdk-20.04
+prebuild: ${ROOT}/build.sh
+builder: cmake
+build_dir: build/jellyfin
+src_dir: build/jellyfin/jellyfin-media-player
+
+build_args: [
+          -DCMAKE_BUILD_TYPE=Debug
+]
+
+dependencies_host:
+- libgles2
+- wget
+dependencies_target:
+- git
+- qtwebengine5-dev
+- qtquickcontrols2-5-dev
+- libqt5x11extras5-dev
+- libcec-dev
+- qml-module-qtquick-controls
+- qml-module-qtwebengine
+- qml-module-qtwebchannel
+- qtbase5-private-dev
+- curl
+- unzip
+
+libraries:
+    libmpv:
+        builder: custom
+        build_dir: build/mpv
+        build: ${ROOT}/build-mpv.sh
+        dependencies_target: python3-pip
+
+        prebuild: pip3 install meson
